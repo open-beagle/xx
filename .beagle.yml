@@ -1,0 +1,47 @@
+---
+kind: pipeline
+name: docker
+
+trigger:
+  branch:
+    - main
+
+clone:
+  disable: true
+
+steps:
+  - name: docker-1.4
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:1.0
+    settings:
+      platforms: linux/amd64,linux/arm64
+      template: registry-vpc.cn-qingdao.aliyuncs.com/wod/xx:1.4.0-ARCH
+      target: registry-vpc.cn-qingdao.aliyuncs.com/wod/xx:1.4.0
+      username:
+        from_secret: REGISTRY_USER_ALIYUN
+      password:
+        from_secret: REGISTRY_PASSWORD_ALIYUN
+
+  - name: docker-1.5
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:1.0
+    settings:
+      platforms: linux/amd64,linux/arm64
+      template: registry-vpc.cn-qingdao.aliyuncs.com/wod/xx:1.5.0-ARCH
+      target: registry-vpc.cn-qingdao.aliyuncs.com/wod/xx:1.5.0
+      username:
+        from_secret: REGISTRY_USER_ALIYUN
+      password:
+        from_secret: REGISTRY_PASSWORD_ALIYUN
+
+---
+kind: secret
+name: REGISTRY_USER_ALIYUN
+get:
+  name: REGISTRY_USER_ALIYUN
+  path: devops-secrets
+
+---
+kind: secret
+name: REGISTRY_PASSWORD_ALIYUN
+get:
+  name: REGISTRY_PASSWORD_ALIYUN
+  path: devops-secrets
