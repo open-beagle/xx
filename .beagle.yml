@@ -32,6 +32,17 @@ steps:
       password:
         from_secret: REGISTRY_PASSWORD_ALIYUN
 
+  - name: docker-1.6
+    image: registry-vpc.cn-qingdao.aliyuncs.com/wod/devops-docker-manifest:1.0
+    settings:
+      platforms: linux/amd64,linux/arm64
+      template: registry-vpc.cn-qingdao.aliyuncs.com/wod/xx:1.6.1-ARCH
+      target: registry-vpc.cn-qingdao.aliyuncs.com/wod/xx:1.6.1
+      username:
+        from_secret: REGISTRY_USER_ALIYUN
+      password:
+        from_secret: REGISTRY_PASSWORD_ALIYUN
+
 ---
 kind: secret
 name: REGISTRY_USER_ALIYUN
